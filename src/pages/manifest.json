@@ -1,0 +1,13 @@
+{
+    "theme_color": "#f69435",
+    "background_color": "#8dbb7c",
+    "display": "browser",
+    "scope": "/",
+    "start_url": "/",
+    "name": "ihkam shared documents ",
+    "short_name": "ihkam shared documents 0",
+    "description": "document sharing for instutut ",
+    "icons": {
+        "name": "liismLogo.svg"
+    }
+}

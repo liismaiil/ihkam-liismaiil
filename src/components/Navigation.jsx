@@ -1,0 +1,70 @@
+import { useEffect, useState } from "react";
+
+import clsx from 'clsx';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+export function Navigation({ navigation, className }) {
+  let router = useRouter()
+  const [subMenu, setSubMenu] = useState(() => -1);
+  useEffect(() => {
+    console.log({ subMenu });
+  }, [subMenu]);
+  const [sectionOpen, setSectionOpen] = useState(false);
+
+  return (
+    <nav className={clsx('text-base lg:text-sm', className)}>
+      <ul role="list" className="space-y-9">
+        {navigation.map((section, index) => (
+          <li key={section.title} style={{ cursor: 'pointer' }} onClick={() => setSubMenu((prev) => {
+            // console.log({ prev, index, subMenu });
+            if (typeof subMenu === 'undefined' || typeof prev === 'undefined') {
+              return index
+            } else {
+              console.log({ prev, index, subMenu });
+              return index
+            }
+          })
+
+          }>
+            <h2 className="font-display font-medium text-slate-900 dark:text-white">
+              <Link
+                href={section.links[0].href}
+                className={clsx(
+                  'block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full',
+                  section.links[0].href === router.pathname
+                    ? 'font-semibold text-sky-500 before:bg-sky-500'
+                    : 'text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300'
+                )}
+                onClick={() => setSectionOpen(true)}
+              >{section.title}
+              </Link>
+            </h2>
+            {subMenu !== -1 && subMenu === index &&
+              <ul
+                role="list"
+                className="mt-2 space-y-2 border-l-2 border-slate-100 dark:border-slate-800 
+               lg:mt-4 lg:space-y-4 lg:border-slate-200"
+              >
+                {section.links.map((link) => (
+                  <li key={link.href} className="relative">
+                    <Link
+                      href={link.href}
+                      className={clsx(
+                        'block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full',
+                        link.href === router.pathname
+                          ? 'font-semibold text-sky-500 before:bg-sky-500'
+                          : 'text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300'
+                      )}
+                    >
+                      {link.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            }          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}

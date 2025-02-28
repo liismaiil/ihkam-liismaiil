@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+
+  doc-liismaiil:
+    image: doc-liismaiil-vol:v0.0
+    container_name: doc-liismaiil-vol
+    restart: always
+    volumes:
+      - public-images:/app/public
+    ports:
+      - 8001:8001
+  
+volumes:
+  public-images:
+    driver: local
+  
